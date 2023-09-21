@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Databases\" />
+    <None Remove="Databases\Migrations\" />
+    <None Remove="Databases\Seeder\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Databases\" />
+    <Folder Include="Databases\Migrations\" />
+    <Folder Include="Databases\Seeder\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator" Version="3.3.2" />
+    <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+    <PackageReference Include="FluentMigrator.Runner.MySql" Version="3.3.2" />
+    <PackageReference Include="MySqlConnector" Version="2.2.7" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.5" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Databases\Seeder\M20230921006_InitialSeeder.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

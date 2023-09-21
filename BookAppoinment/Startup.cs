@@ -1,13 +1,15 @@
-﻿using System;
+﻿using System.Reflection;
+using BookAppoinment.Adapters;
+using BookAppoinment.Adapters.Repositories;
+using BookAppoinment.Adapters.Repositories.Interfaces;
+using BookAppoinment.Domain;
+using MediatR;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
-using System.Reflection;
 using Microsoft.OpenApi.Models;
-using Serilog;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.HttpLogging;
 
 namespace BookAppoinment;
 
@@ -59,6 +61,8 @@ public class Startup
     {
         _logger.LogInformation("Configuring Services");
         AddApi(services);
+        AddMediatr(services);
+        AddPersistence(services);
         AddSwagger(services);
     }
 
@@ -85,6 +89,18 @@ public class Startup
         {
             logging.LoggingFields = HttpLoggingFields.All;
         });
+    }
+
+    protected virtual void AddMediatr(IServiceCollection services)
+    {
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<CommandHandler>());
+    }
+
+    protected virtual void AddPersistence(IServiceCollection services)
+    {
+        _logger.LogInformation("Adding Persistent Services");
+        services.AddDbContext<QwiikDataContext, MySqlDbContext>();
+        services.AddScoped<IAgencyRepository, AgencyRepository<QwiikDataContext>>();
     }
 
     protected virtual void AddSwagger(IServiceCollection services)
