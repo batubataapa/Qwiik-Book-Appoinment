@@ -20,21 +20,33 @@
     <PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
     <PackageReference Include="Serilog.Expressions" Version="3.4.1" />
     <PackageReference Include="Serilog.Sinks.XUnit" Version="3.0.5" />
-    <PackageReference Include="LanguageExt.Core" Version="4.4.4" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.5" />
     <PackageReference Include="FluentMigrator" Version="3.3.2" />
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
     <PackageReference Include="FluentMigrator.Runner.MySql" Version="3.3.2" />
     <PackageReference Include="MySqlConnector" Version="2.2.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.22" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+    <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Endpoints\" />
     <None Remove="Endpoints\Api\" />
-    <None Remove="Model\" />
+    <None Remove="Endpoints\Agencies\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Endpoints\" />
     <Folder Include="Endpoints\Api\" />
-    <Folder Include="Model\" />
+    <Folder Include="Endpoints\Agencies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookAppoinment.Adapters\BookAppoinment.Adapters.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\BookAppoinment.Domain\BookAppoinment.Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using Ardalis.ApiEndpoints;
-using BookAppoinment.Model;
+using BookAppoinment.Adapters.Model;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -16,12 +16,10 @@ public class Info : EndpointBaseSync
     /// <response code="200">Return success</response>
     [HttpGet("/api/info")]
     [SwaggerOperation(Tags = new[] { "Api" })]
-    [ProducesResponseType(typeof(InfoResponse), StatusCodes.Status200OK)]
-    public override IActionResult Handle()
-    {
-        var test = "tste";
-        return QwiikResponse<InfoResponse>.CreateFrom(new InfoResponse(), HttpStatusCode.OK);
-    }
+    [ProducesResponseType(typeof(QwiikResponse<InfoResponse>), StatusCodes.Status200OK)]
+    public override IActionResult Handle() =>
+        QwiikResponse<InfoResponse>.CreateFrom(new InfoResponse(), HttpStatusCode.OK);
+
 }
 
 public class InfoResponse

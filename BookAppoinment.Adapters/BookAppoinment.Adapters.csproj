@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.22" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+    <PackageReference Include="MySqlConnector" Version="2.2.7" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.5" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Repositories\" />
+    <None Remove="Repositories\Interfaces\" />
+    <None Remove="Repositories\Dtos\" />
+    <None Remove="Model\" />
+    <None Remove="Errors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Interfaces\" />
+    <Folder Include="Repositories\Dtos\" />
+    <Folder Include="Model\" />
+    <Folder Include="Errors\" />
+  </ItemGroup>
+</Project>

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BookAppoinment.Model;
+namespace BookAppoinment.Adapters.Model;
 
 public class QwiikMetadata
 {
