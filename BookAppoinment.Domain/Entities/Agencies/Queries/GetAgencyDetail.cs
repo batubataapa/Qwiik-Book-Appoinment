@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using BookAppoinment.Adapters.Errors;
 using BookAppoinment.Adapters.Model;
 using BookAppoinment.Adapters.Repositories.Interfaces;
@@ -12,11 +13,13 @@ public class GetAgencyDetail :
     IRequestHandler<GetAgencyDetailQuery, Either<QwiikError, AgencyDetailResponse>>
 {
     private readonly ILogger<GetAgencyDetail> _log;
+    private readonly IMapper _mapper;
     private readonly IAgencyRepository _repository;
 
-    public GetAgencyDetail(ILogger<GetAgencyDetail> log, IAgencyRepository repository)
+    public GetAgencyDetail(ILogger<GetAgencyDetail> log, IMapper mapper, IAgencyRepository repository)
     {
         _log = log;
+        _mapper = mapper;
         _repository = repository;
     }
 
@@ -25,7 +28,7 @@ public class GetAgencyDetail :
     {
         return (await _repository.GetAgencyByAgencyIdAsync(request.AgencyId))
             .ErrorIfNone(new QwiikInternalServerError())
-            .Map(resp => new AgencyDetailResponse { Address = resp.Address, Email = resp.Email, Name = resp.Name, Phone = resp.Phone });
+            .Map(_mapper.Map<AgencyDetailResponse>);
     }
 }
 

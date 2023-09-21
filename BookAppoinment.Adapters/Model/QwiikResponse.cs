@@ -38,7 +38,7 @@ public class QwiikResponse<T>: IActionResult
 
     public static QwiikResponse<T> CreateFromError(QwiikError data)
     {
-        // We do this because we might be casting data to MantraError, and 
+        // We do this because we might be casting data to QwiikError, and 
         // for some reason type-based pattern matching doesn't work polymorphically
         var responseCode = data.GetType().Name switch
         {
