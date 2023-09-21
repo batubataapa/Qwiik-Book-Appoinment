@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AutoMapper;
 using BookAppoinment.Adapters;
 using BookAppoinment.Adapters.Repositories;
 using BookAppoinment.Adapters.Repositories.Interfaces;
@@ -61,6 +62,7 @@ public class Startup
     {
         _logger.LogInformation("Configuring Services");
         AddApi(services);
+        AddAutoMapper(services);
         AddMediatr(services);
         AddPersistence(services);
         AddSwagger(services);
@@ -89,6 +91,23 @@ public class Startup
         {
             logging.LoggingFields = HttpLoggingFields.All;
         });
+    }
+
+    protected virtual void AddAutoMapper(IServiceCollection services)
+    {
+        foreach (var file in Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "BookAppoinment*.dll", SearchOption.AllDirectories))
+        {
+            string[] checkMapper = { "BookAppoinment.Domain.dll", "BookAppoinment.dll" };
+            if (checkMapper.Any(file.Contains))
+            {
+                var asm = Assembly.Load(Path.GetFileNameWithoutExtension(file));
+                var types = asm.GetTypes();
+                if (types.Any(t => t.IsSubclassOf(typeof(Profile)) && !t.IsAbstract))
+                {
+                    services.AddAutoMapper(asm);
+                }
+            }
+        }
     }
 
     protected virtual void AddMediatr(IServiceCollection services)
