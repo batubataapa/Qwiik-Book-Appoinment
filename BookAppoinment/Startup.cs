@@ -120,6 +120,7 @@ public class Startup
         _logger.LogInformation("Adding Persistent Services");
         services.AddDbContext<QwiikDataContext, MySqlDbContext>();
         services.AddScoped<IAgencyRepository, AgencyRepository<QwiikDataContext>>();
+        services.AddScoped<IBookingRepository, BookingRepository<QwiikDataContext>>();
     }
 
     protected virtual void AddSwagger(IServiceCollection services)

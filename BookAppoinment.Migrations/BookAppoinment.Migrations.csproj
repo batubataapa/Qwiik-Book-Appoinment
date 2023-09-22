@@ -26,6 +26,7 @@
     <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.22" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Databases\Seeder\M20230921006_InitialSeeder.sql">
