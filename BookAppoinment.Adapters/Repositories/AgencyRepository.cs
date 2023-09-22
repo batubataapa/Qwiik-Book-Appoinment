@@ -17,10 +17,8 @@ public class AgencyRepository<T> : IAgencyRepository where T : QwiikDataContext
     }
 
     //Queries
-    public async Task<Option<AgenciesDto>> GetAgencyByAgencyIdAsync(int agencyId)
-    {
-        return Optional(await _context.Agencies.Where(Dtos => Dtos.Id == agencyId).FirstOrDefaultAsync());
-    }
+    public async Task<Option<AgenciesDto>> GetAgencyByAgencyIdAsync(int agencyId) =>
+        Optional(await _context.Agencies.Where(Dtos => Dtos.Id == agencyId).FirstOrDefaultAsync());
 
     //Commands
 }

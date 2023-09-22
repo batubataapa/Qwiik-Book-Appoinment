@@ -31,17 +31,20 @@
     <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.22" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Endpoints\" />
     <None Remove="Endpoints\Api\" />
     <None Remove="Endpoints\Agencies\" />
+    <None Remove="Endpoints\Appointment\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Endpoints\" />
     <Folder Include="Endpoints\Api\" />
     <Folder Include="Endpoints\Agencies\" />
+    <Folder Include="Endpoints\Appointment\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookAppoinment.Adapters\BookAppoinment.Adapters.csproj">

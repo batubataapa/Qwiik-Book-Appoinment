@@ -20,7 +20,7 @@ public class GetAgencyDetail : EndpointBaseAsync
     ///     Handle Agency detail
     /// </summary>
     /// <response code="200">Return success message</response>
-    [HttpGet("/agencies/details/{agencyId}")]
+    [HttpGet("/agencies/{agencyId}")]
     [SwaggerOperation(Tags = new[] { "Agencies" })]
     [ProducesResponseType(typeof(QwiikResponse<AgencyDetailResponse>), StatusCodes.Status200OK)]
     public override async Task<IActionResult>
