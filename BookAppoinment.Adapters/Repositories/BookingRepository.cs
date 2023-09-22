@@ -31,7 +31,6 @@ public class BookingRepository<T> : IBookingRepository where T : QwiikDataContex
     public async Task<bool> CheckMaximumAppointmentsByDateAsync(DateOnly pickedDate)
     {
         var max = await _context.MaximumAppointments.Where(Dtos => Dtos.AppointmentDate == pickedDate && Dtos.MaximumAppointmentStatus).FirstOrDefaultAsync();
-        var test = await _context.Appointments.CountAsync(Dtos => Dtos.AppointmentDate == pickedDate);
         return await _context.Appointments.CountAsync(Dtos => Dtos.AppointmentDate == pickedDate) >= max?.MaximumAppointmentNumber;
     }
 

@@ -31,13 +31,16 @@ public class CreateAppointment :
         var customers = await _repository.GetCustomerByEmailAsync(request.Model.Customer.Email!)
             .MatchAsync(cust => cust,
                 async () => await _repository.AddNewCustomerAsync(_mapper.Map<CustomersDto>(request.Model.Customer)));
-        if (await _repository.CheckMaximumAppointmentsByDateAsync(DateOnly.FromDateTime(request.Model.AppointmentDate)))
-            return new QwiikInternalServerError("Maximum appointments reached");
+        var pickedDate = request.Model.AppointmentDate;
+        while (await _repository.CheckMaximumAppointmentsByDateAsync(DateOnly.FromDateTime(pickedDate)))
+        {
+            pickedDate = pickedDate.AddDays(1);
+        }
         if (await _repository.CheckOffDaysByDateAsync(DateOnly.FromDateTime(request.Model.AppointmentDate)))
             return new QwiikInternalServerError("This agency is having off days");
         return (await customers.BindAsync(async cust =>
                 await _repository.AddNewAppointmentAsync(new AppointmentsDto
-                { AgencyId = request.AgencyId, CustomerId = cust.Id, AppointmentDate = DateOnly.FromDateTime(request.Model.AppointmentDate) })))
+                { AgencyId = request.AgencyId, CustomerId = cust.Id, AppointmentDate = DateOnly.FromDateTime(pickedDate) })))
             .Map(_ => new CreateAppointmentResponse()); ;
     }
 

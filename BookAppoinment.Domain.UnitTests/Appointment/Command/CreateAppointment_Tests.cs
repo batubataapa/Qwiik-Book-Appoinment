@@ -80,7 +80,7 @@ public class CreateAppointment_Tests : Qwiik_Tests
             Right: _ => Assert.False(true));
     }
 
-    [Fact]
+    [Fact(Skip = "New feature making this obsolete since we're going to add the appointment to another day")]
     public async Task Handle_GetAppointmentDetail_Failed_MaximumReached()
     {
         var appointments = new List<AppointmentsDto>();
@@ -106,5 +106,30 @@ public class CreateAppointment_Tests : Qwiik_Tests
             },
             Bottom: () => Assert.False(true),
             Right: _ => Assert.False(true));
+    }
+
+    [Fact]
+    public async Task Handle_GetAppointmentDetail_Success_MaximumReached()
+    {
+        var appointments = new List<AppointmentsDto>();
+        for (int i = 0; i < 3; i++)
+        {
+            appointments.Add(new AppointmentsDto { AppointmentDate = DateOnly.MinValue, CreatedAt = DateTime.UtcNow, CustomerId = i, AgencyId = 1, Token = Guid.NewGuid().ToString() });
+        }
+        _dbContext.Appointments.AddRange(appointments);
+        _dbContext.MaximumAppointments.Add(new MaximumAppointmentsDto { MaximumAppointmentStatus = true, AppointmentDate = DateOnly.FromDateTime(DateTime.MinValue), AgencyId = 1, MaximumAppointmentNumber = 3 });
+        await _dbContext.SaveChangesAsync();
+
+        // Let's set up the command
+        var customer = new CreateAppointmentCustomerRequest { Address = "123 Main Street, City 1", FirstName = "John", LastName = "Doe", Email = "john@example.com", Phone = "+1234567890" };
+        var createAppointmentRequestDto = new CreateAppointmentRequestDto { Customer = customer, AppointmentDate = DateTime.MinValue };
+        var createAppointmentCommand = new CreateAppointmentCommand(1, createAppointmentRequestDto);
+
+        var resp = await _sut.Handle(createAppointmentCommand, new CancellationToken());
+        Assert.Equal(1, _dbContext.Appointments.Count(Dtos => Dtos.AppointmentDate == DateOnly.MinValue.AddDays(1)));
+        resp.Match(
+            Left: _ => Assert.False(true),
+            Bottom: () => Assert.False(true),
+            Right: u => Assert.IsType<CreateAppointmentResponse>(u));
     }
 }
